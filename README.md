@@ -1,2 +1,2 @@
-Malak # RecruitAI
+# RecruitAI
 init
