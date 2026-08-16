@@ -1,0 +1,4 @@
+# TODO: Scheduling Advisor prompt (Identity / Instructions / Examples).
+# Decide sched vs dont_sched. If sched, tell the model to call get_available_slots.
+# Explain how to turn "next Friday" into a YYYY-MM-DD using the conversation current date.
+# Help: Lesson 20 - GenAI (DL) - Prompt Engineering

@@ -1,0 +1,4 @@
+# TODO: Main Agent prompt (Identity / Instructions / few-shot Examples).
+# Teach the model to choose next = exit | sched | info | respond and to write short SMS replies.
+# If you put JSON examples in this file, escape { } as {{ }} when using ChatPromptTemplate.
+# Help: Lesson 20 - GenAI (DL) - Prompt Engineering
