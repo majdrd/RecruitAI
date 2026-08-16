@@ -1,0 +1,3 @@
+# TODO: Exit Advisor prompt (Identity / Instructions / Examples).
+# Decide only end vs dont_end from the full chat history. Do not write to the candidate.
+# Help: Lesson 20 - GenAI (DL) - Prompt Engineering
