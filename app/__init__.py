@@ -1,0 +1,1 @@
+"""RecruitAI application package."""
