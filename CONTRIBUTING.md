@@ -1,8 +1,9 @@
 # Contributing
 
-RecruitAI is a two-person student project by **Majd Rada** and **Malak Abu Saleh**. The `file_structure` branch is an **empty skeleton**:
-every code file holds a TODO describing what it should do and a `Help: Lesson N` line pointing at
-the course lesson that teaches it. The point is to implement the files yourself.
+RecruitAI is a two-person student project by **Majd Rada** and **Malak Abu Saleh**. The `main` branch
+is an **empty skeleton**: every code file holds a TODO describing what it should do and a
+`Help: Lesson N` line pointing at the course lesson that teaches it. The point is to implement the
+files yourself.
 
 A finished reference implementation lives on the `FINAL_PROJECT` branch. Use it only if you are
 stuck, and do not copy it over the skeleton.
@@ -35,20 +36,24 @@ See [AGENTS.md](AGENTS.md) for the full architecture and technical constraints.
 **Together, afterwards**
 
 - Exit Advisor (`app/modules/prompts/exit_advisor.txt` + `app/modules/agents/exit_advisor.py`)
-- Main Agent and orchestrator
+- Main Agent and orchestrator (two decisions, so two prompts: `main_agent_advisor.txt` and
+  `main_agent_reply.txt`)
 - Streamlit interface
 - `tests/test_evals.ipynb`
 
 Note that `app/modules/config.py` holds the shared paths that both halves import, so whoever starts
 first should write it.
 
-## Getting the branch
+## Getting started
 
 ```bash
 git fetch origin
-git checkout file_structure
+git checkout main
+git pull
 source .venv/bin/activate
 ```
+
+Work on a short-lived branch off `main` and open a pull request when the piece is done.
 
 Course material under `assets/` is reference only and is gitignored, so nothing in the project may
 depend on it.
