@@ -11,7 +11,7 @@ if str(ROOT) not in sys.path:
 
 from app.modules.agents.orchestrator import resolve_action
 from app.modules.database.db import get_nearest_slots
-from app.modules.finetuning.prepare_data import build_labeled_rows
+from app.modules.evaluation.prepare_data import build_labeled_rows
 
 
 class ScheduleTests(unittest.TestCase):
@@ -35,9 +35,9 @@ class LabelTests(unittest.TestCase):
         frame = build_labeled_rows()
         self.assertFalse(frame.empty)
         self.assertTrue(set(frame["label"]).issubset({"continue", "schedule", "end"}))
-        self.assertTrue(set(frame["end_label"]).issubset({"end", "not_end"}))
-        self.assertTrue((frame.loc[frame["label"] == "end", "end_label"] == "end").all())
-        self.assertTrue((frame.loc[frame["label"] != "end", "end_label"] == "not_end").all())
+        expected_columns = {"conversation_id", "turn_id", "timestamp_utc", "history", "label"}
+        self.assertTrue(expected_columns.issubset(frame.columns))
+        self.assertNotIn("end_label", frame.columns)
 
 
 class ActionPriorityTests(unittest.TestCase):

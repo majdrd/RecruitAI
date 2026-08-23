@@ -1,72 +1,54 @@
-"""Conversation Exit Advisor: sklearn classifier plus a small keyword fallback."""
+"""Conversation Exit Advisor: prompt-engineered LLM decision."""
 
-import re
+import os
 
-import joblib
+from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
 
-from app.modules.config import EXIT_MODEL_PATH
+from app.modules.config import DEFAULT_MODEL, PROMPTS_DIR
 
-END_PATTERNS = [
-    r"\bno longer interested\b",
-    r"\bnot interested\b",
-    r"\bremove me\b",
-    r"\balready found a job\b",
-    r"\balready hired\b",
-    r"\bstop (texting|messaging|contacting)\b",
-    r"\bunsubscribe\b",
-    r"interview is confirmed",
-    r"\bbooked the interview\b",
-    r"\bslot is reserved\b",
-    r"calendar invite",
-]
+VALID_DECISIONS = {"end", "dont_end"}
 
 
-def _keyword_decision(history_text):
-    text = (history_text or "").lower()
-    for pattern in END_PATTERNS:
-        if re.search(pattern, text):
-            return {
-                "decision": "end",
-                "reason": f"matched exit pattern: {pattern}",
-                "source": "keywords",
-            }
-    return None
+def _load_prompt():
+    # Prompt files contain JSON examples. Escape braces so LangChain
+    # does not treat {"decision"} as a template variable.
+    text = (PROMPTS_DIR / "exit_advisor.txt").read_text(encoding="utf-8")
+    return text.replace("{", "{{").replace("}", "}}")
 
 
-def load_model(path=EXIT_MODEL_PATH):
-    if not path.exists():
-        return None
-    return joblib.load(path)
+def _build_chain():
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", _load_prompt()),
+            (
+                "user",
+                "Full conversation:\n{history}\n\n"
+                "Return JSON with keys decision and reason.",
+            ),
+        ]
+    )
+    llm = ChatOpenAI(model=os.getenv("OPENAI_MODEL", DEFAULT_MODEL), temperature=0)
+    return prompt | llm | JsonOutputParser()
 
 
 def predict(history_text):
     """Return {decision: end|dont_end, reason, source}."""
-    keyword_hit = _keyword_decision(history_text)
-    model = load_model()
+    chain = _build_chain()
+    result = chain.invoke({"history": history_text or ""})
+    if not isinstance(result, dict):
+        result = {}
 
-    if model is None:
-        if keyword_hit:
-            return keyword_hit
-        return {
-            "decision": "dont_end",
-            "reason": "no exit model found and no exit keywords",
-            "source": "fallback",
-        }
+    decision = str(result.get("decision", "")).strip().lower()
+    if decision not in VALID_DECISIONS:
+        decision = "dont_end"
 
-    label = model.predict([history_text or ""])[0]
-    decision = "end" if label == "end" else "dont_end"
-    result = {
+    return {
         "decision": decision,
-        "reason": f"classifier predicted {label}",
-        "source": "sklearn",
+        "reason": result.get("reason") or "no reason given",
+        "source": "prompt",
     }
-
-    # Keywords catch clear opt-outs the small model may miss.
-    if keyword_hit and keyword_hit["decision"] == "end":
-        result["decision"] = "end"
-        result["reason"] = keyword_hit["reason"]
-        result["source"] = "sklearn+keywords"
-    return result
 
 
 if __name__ == "__main__":

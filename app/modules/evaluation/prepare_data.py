@@ -1,4 +1,4 @@
-"""Turn labeled SMS conversations into tables for training and evaluation."""
+"""Turn labeled SMS conversations into a table for evaluation."""
 
 import json
 import sys
@@ -46,7 +46,6 @@ def build_labeled_rows(conversations=None):
                     "timestamp_utc": turn["timestamp_utc"],
                     "history": format_turns(history_turns),
                     "label": label,
-                    "end_label": "end" if label == "end" else "not_end",
                 }
             )
     return pd.DataFrame(rows)

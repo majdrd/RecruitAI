@@ -95,7 +95,7 @@ def handle_turn(user_input, session_id="default", conversation_dt=None):
 
 
 def predict_action(history_text, conversation_dt=None):
-    """Cheaper eval path: Exit + Sched vote, then apply end > schedule > continue."""
+    """Eval path: Exit + Sched vote, then apply end > schedule > continue."""
     conversation_dt = _parse_conversation_dt(conversation_dt)
     exit_result = exit_advisor.predict(history_text)
     if exit_result.get("decision") == "end":

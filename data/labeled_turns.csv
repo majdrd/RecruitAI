@@ -1,30 +1,30 @@
-conversation_id,turn_id,start_time_utc,timestamp_utc,history,label,end_label
-1,1,2024-04-03T15:12:00Z,2024-04-03T15:12:00Z,,continue,not_end
+conversation_id,turn_id,start_time_utc,timestamp_utc,history,label
+1,1,2024-04-03T15:12:00Z,2024-04-03T15:12:00Z,,continue
 1,3,2024-04-03T15:12:00Z,2024-04-03T15:15:01Z,"Recruiter: Thanks for applying to our Python Developer opening. What kinds of Python projects have you worked on recently?
-Candidate: I've been using Python professionally for five years, mostly for data analysis.",schedule,not_end
+Candidate: I've been using Python professionally for five years, mostly for data analysis.",schedule
 1,5,2024-04-03T15:12:00Z,2024-04-03T15:16:23Z,"Recruiter: Thanks for applying to our Python Developer opening. What kinds of Python projects have you worked on recently?
 Candidate: I've been using Python professionally for five years, mostly for data analysis.
 Recruiter: Our engineering manager can interview you Wednesday at 10 AM or Thursday at 2 PM. Which works best?
-Candidate: I can't at that time—I'm busy.",schedule,not_end
+Candidate: I can't at that time—I'm busy.",schedule
 1,7,2024-04-03T15:12:00Z,2024-04-03T15:17:46Z,"Recruiter: Thanks for applying to our Python Developer opening. What kinds of Python projects have you worked on recently?
 Candidate: I've been using Python professionally for five years, mostly for data analysis.
 Recruiter: Our engineering manager can interview you Wednesday at 10 AM or Thursday at 2 PM. Which works best?
 Candidate: I can't at that time—I'm busy.
 Recruiter: No problem. How about Thursday at 4 PM instead?
-Candidate: Monday at 3 PM is good.",end,end
-2,1,2024-04-30T11:19:00Z,2024-04-30T11:19:00Z,,continue,not_end
+Candidate: Monday at 3 PM is good.",end
+2,1,2024-04-30T11:19:00Z,2024-04-30T11:19:00Z,,continue
 2,3,2024-04-30T11:19:00Z,2024-04-30T11:21:46Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
-Candidate: I have three years' experience with Django and Flask.",continue,not_end
+Candidate: I have three years' experience with Django and Flask.",continue
 2,5,2024-04-30T11:19:00Z,2024-04-30T11:24:54Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: I have three years' experience with Django and Flask.
 Recruiter: Do you have any questions of your own?
-Candidate: Could you share more about the company's cloud technologies?",continue,not_end
+Candidate: Could you share more about the company's cloud technologies?",continue
 2,7,2024-04-30T11:19:00Z,2024-04-30T11:28:06Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: I have three years' experience with Django and Flask.
 Recruiter: Do you have any questions of your own?
 Candidate: Could you share more about the company's cloud technologies?
 Recruiter: We currently deploy to AWS using Docker and ECS.
-Candidate: Sounds great! I'd be happy to schedule a meeting",schedule,not_end
+Candidate: Sounds great! I'd be happy to schedule a meeting",schedule
 2,9,2024-04-30T11:19:00Z,2024-04-30T11:31:45Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: I have three years' experience with Django and Flask.
 Recruiter: Do you have any questions of your own?
@@ -32,73 +32,73 @@ Candidate: Could you share more about the company's cloud technologies?
 Recruiter: We currently deploy to AWS using Docker and ECS.
 Candidate: Sounds great! I'd be happy to schedule a meeting
 Recruiter: Understood—what about next Tuesday at 10 AM?
-Candidate: Tuesday at 10 AM works.",end,end
-3,1,2024-04-10T16:02:00Z,2024-04-10T16:02:00Z,,continue,not_end
+Candidate: Tuesday at 10 AM works.",end
+3,1,2024-04-10T16:02:00Z,2024-04-10T16:02:00Z,,continue
 3,3,2024-04-10T16:02:00Z,2024-04-10T16:04:16Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
-Candidate: Sure, I have four years of Python experience and two with SQL.",continue,not_end
+Candidate: Sure, I have four years of Python experience and two with SQL.",continue
 3,5,2024-04-10T16:02:00Z,2024-04-10T16:07:17Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: Sure, I have four years of Python experience and two with SQL.
 Recruiter: How comfortable are you with SQL in addition to Python?
-Candidate: Very comfortable, may I ask what technologies does the current stack use?",continue,not_end
+Candidate: Very comfortable, may I ask what technologies does the current stack use?",continue
 3,7,2024-04-10T16:02:00Z,2024-04-10T16:10:09Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: Sure, I have four years of Python experience and two with SQL.
 Recruiter: How comfortable are you with SQL in addition to Python?
 Candidate: Very comfortable, may I ask what technologies does the current stack use?
 Recruiter: We currently deploy to AWS using Docker and ECS.
-Candidate: I would like to set an appointment, does Monday at 3 PM is good.",end,end
-4,1,2024-04-28T11:13:00Z,2024-04-28T11:13:00Z,,continue,not_end
+Candidate: I would like to set an appointment, does Monday at 3 PM is good.",end
+4,1,2024-04-28T11:13:00Z,2024-04-28T11:13:00Z,,continue
 4,3,2024-04-28T11:13:00Z,2024-04-28T11:14:37Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
-Candidate: I've been using Python professionally for five years, mostly for data analysis.",continue,not_end
+Candidate: I've been using Python professionally for five years, mostly for data analysis.",continue
 4,5,2024-04-28T11:13:00Z,2024-04-28T11:17:28Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
 Candidate: I've been using Python professionally for five years, mostly for data analysis.
 Recruiter: Are you also using SQL in addition to Python?
-Candidate: Yes, SQL is a big part of my job. Is the position fully remote or hybrid?",continue,not_end
+Candidate: Yes, SQL is a big part of my job. Is the position fully remote or hybrid?",continue
 4,7,2024-04-28T11:13:00Z,2024-04-28T11:20:25Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
 Candidate: I've been using Python professionally for five years, mostly for data analysis.
 Recruiter: Are you also using SQL in addition to Python?
 Candidate: Yes, SQL is a big part of my job. Is the position fully remote or hybrid?
 Recruiter: Hybrid work model, with at least two days of remote work per week, will you be able to meet next Wednesday at 10 AM
-Candidate: Wednesday at 10 AM works for me.",end,end
-5,1,2024-04-26T12:43:00Z,2024-04-26T12:43:00Z,,continue,not_end
+Candidate: Wednesday at 10 AM works for me.",end
+5,1,2024-04-26T12:43:00Z,2024-04-26T12:43:00Z,,continue
 5,3,2024-04-26T12:43:00Z,2024-04-26T12:45:23Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
-Candidate: I primarily work with Python for backend services.",schedule,not_end
+Candidate: I primarily work with Python for backend services.",schedule
 5,5,2024-04-26T12:43:00Z,2024-04-26T12:46:47Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: I primarily work with Python for backend services.
 Recruiter: Our engineering manager can interview you Wednesday at 10 AM or Thursday at 2 PM. Which works best?
-Candidate: Please remove me from your list. Thanks.",end,end
-6,1,2024-04-16T16:45:00Z,2024-04-16T16:45:00Z,,continue,not_end
+Candidate: Please remove me from your list. Thanks.",end
+6,1,2024-04-16T16:45:00Z,2024-04-16T16:45:00Z,,continue
 6,3,2024-04-16T16:45:00Z,2024-04-16T16:46:35Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
-Candidate: I've been using Python professionally for five years.",schedule,not_end
+Candidate: I've been using Python professionally for five years.",schedule
 6,5,2024-04-16T16:45:00Z,2024-04-16T16:49:14Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
 Candidate: I've been using Python professionally for five years.
 Recruiter: Could we schedule a chat this Friday at 11 AM or next Monday at 9 AM?
-Candidate: Friday 11 AM sounds great.",end,end
-7,1,2024-04-12T12:15:00Z,2024-04-12T12:15:00Z,,continue,not_end
+Candidate: Friday 11 AM sounds great.",end
+7,1,2024-04-12T12:15:00Z,2024-04-12T12:15:00Z,,continue
 7,3,2024-04-12T12:15:00Z,2024-04-12T12:18:13Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
-Candidate: I have three years' experience with Django and Flask.",schedule,not_end
+Candidate: I have three years' experience with Django and Flask.",schedule
 7,5,2024-04-12T12:15:00Z,2024-04-12T12:20:58Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
 Candidate: I have three years' experience with Django and Flask.
 Recruiter: How about an interview Monday at 3 PM or Tuesday at 11 AM?
-Candidate: I'm unavailable then; do you have any other times?",schedule,not_end
+Candidate: I'm unavailable then; do you have any other times?",schedule
 7,7,2024-04-12T12:15:00Z,2024-04-12T12:24:25Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
 Candidate: I have three years' experience with Django and Flask.
 Recruiter: How about an interview Monday at 3 PM or Tuesday at 11 AM?
 Candidate: I'm unavailable then; do you have any other times?
 Recruiter: Understood—what about next Tuesday at 10 AM?
-Candidate: Tuesday at 10 AM works.",end,end
-8,1,2024-04-03T12:49:00Z,2024-04-03T12:49:00Z,,continue,not_end
+Candidate: Tuesday at 10 AM works.",end
+8,1,2024-04-03T12:49:00Z,2024-04-03T12:49:00Z,,continue
 8,3,2024-04-03T12:49:00Z,2024-04-03T12:51:56Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
-Candidate: I have three years' experience with Python.",schedule,not_end
+Candidate: I have three years' experience with Python.",schedule
 8,5,2024-04-03T12:49:00Z,2024-04-03T12:54:58Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
 Candidate: I have three years' experience with Python.
 Recruiter: Our engineering manager can interview you Wednesday at 10 AM or Thursday at 2 PM. Which works best?
-Candidate: Those slots don't work for me.",schedule,not_end
+Candidate: Those slots don't work for me.",schedule
 8,7,2024-04-03T12:49:00Z,2024-04-03T12:57:34Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
 Candidate: I have three years' experience with Python.
 Recruiter: Our engineering manager can interview you Wednesday at 10 AM or Thursday at 2 PM. Which works best?
 Candidate: Those slots don't work for me.
 Recruiter: Understood—what about next Tuesday at 10 AM?
-Candidate: I'm unavailable at that time, as I have other commitments. I'll reach out if it becomes relevant",schedule,not_end
+Candidate: I'm unavailable at that time, as I have other commitments. I'll reach out if it becomes relevant",schedule
 8,9,2024-04-03T12:49:00Z,2024-04-03T13:00:24Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
 Candidate: I have three years' experience with Python.
 Recruiter: Our engineering manager can interview you Wednesday at 10 AM or Thursday at 2 PM. Which works best?
@@ -106,46 +106,46 @@ Candidate: Those slots don't work for me.
 Recruiter: Understood—what about next Tuesday at 10 AM?
 Candidate: I'm unavailable at that time, as I have other commitments. I'll reach out if it becomes relevant
 Recruiter: How about next Thursday?
-Candidate: I will be intouch, please stop texting me",end,end
-9,1,2024-04-17T17:20:00Z,2024-04-17T17:20:00Z,,continue,not_end
+Candidate: I will be intouch, please stop texting me",end
+9,1,2024-04-17T17:20:00Z,2024-04-17T17:20:00Z,,continue
 9,3,2024-04-17T17:20:00Z,2024-04-17T17:22:58Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
-Candidate: I've been using Python professionally for five years, mostly for data analysis.",schedule,not_end
+Candidate: I've been using Python professionally for five years, mostly for data analysis.",schedule
 9,5,2024-04-17T17:20:00Z,2024-04-17T17:24:43Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: I've been using Python professionally for five years, mostly for data analysis.
 Recruiter: Our engineering manager can interview you Wednesday at 10 AM or Thursday at 2 PM. Which works best?
-Candidate: Tuesday at 10 AM works. But can I get more details about the position?",continue,not_end
+Candidate: Tuesday at 10 AM works. But can I get more details about the position?",continue
 9,7,2024-04-17T17:20:00Z,2024-04-17T17:25:26Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: I've been using Python professionally for five years, mostly for data analysis.
 Recruiter: Our engineering manager can interview you Wednesday at 10 AM or Thursday at 2 PM. Which works best?
 Candidate: Tuesday at 10 AM works. But can I get more details about the position?
 Recruiter: Great, your interview is confirmed. Sure, We're looking for a skilled Python Developer with expertise in Python 3 and experience working with frameworks such as Django, Flask, or FastAPI. The ideal candidate should be familiar with building RESTful APIs, working with SQL or NoSQL databases, and using version control systems like Git.
-Candidate: Sounds greate, see you then",end,end
-10,1,2024-04-27T13:30:00Z,2024-04-27T13:30:00Z,,continue,not_end
+Candidate: Sounds greate, see you then",end
+10,1,2024-04-27T13:30:00Z,2024-04-27T13:30:00Z,,continue
 10,3,2024-04-27T13:30:00Z,2024-04-27T13:32:31Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
-Candidate: I've been using Python for a couple of month, I don't have much experience in that area, but I'm eager to learn and quickly adapt.",continue,not_end
+Candidate: I've been using Python for a couple of month, I don't have much experience in that area, but I'm eager to learn and quickly adapt.",continue
 10,5,2024-04-27T13:30:00Z,2024-04-27T13:33:05Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
 Candidate: I've been using Python for a couple of month, I don't have much experience in that area, but I'm eager to learn and quickly adapt.
 Recruiter: Could you elaborate on your experience with cloud platforms like AWS or GCP?
-Candidate: I've worked a bit with AWS, but I don't have experience with GCP yet.",schedule,not_end
+Candidate: I've worked a bit with AWS, but I don't have experience with GCP yet.",schedule
 10,7,2024-04-27T13:30:00Z,2024-04-27T13:34:09Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
 Candidate: I've been using Python for a couple of month, I don't have much experience in that area, but I'm eager to learn and quickly adapt.
 Recruiter: Could you elaborate on your experience with cloud platforms like AWS or GCP?
 Candidate: I've worked a bit with AWS, but I don't have experience with GCP yet.
 Recruiter: I see, could we schedule a chat this Friday at 11 AM or next Monday at 9 AM?
-Candidate: Monday at 3 PM is good.",end,end
-11,1,2024-04-14T15:30:00Z,2024-04-14T15:30:00Z,,continue,not_end
+Candidate: Monday at 3 PM is good.",end
+11,1,2024-04-14T15:30:00Z,2024-04-14T15:30:00Z,,continue
 11,3,2024-04-14T15:30:00Z,2024-04-14T15:32:28Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
-Candidate: I have three years' experience with Pyhon and AWS.",continue,not_end
+Candidate: I have three years' experience with Pyhon and AWS.",continue
 11,5,2024-04-14T15:30:00Z,2024-04-14T15:34:47Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: I have three years' experience with Pyhon and AWS.
 Recruiter: Could you elaborate on your experience with cloud platforms like AWS?
-Candidate: I've worked a bit with AWS, mainly for deploying small apps and managing storage, but I'm still gaining experience and open to learning more.",continue,not_end
+Candidate: I've worked a bit with AWS, mainly for deploying small apps and managing storage, but I'm still gaining experience and open to learning more.",continue
 11,7,2024-04-14T15:30:00Z,2024-04-14T15:37:03Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: I have three years' experience with Pyhon and AWS.
 Recruiter: Could you elaborate on your experience with cloud platforms like AWS?
 Candidate: I've worked a bit with AWS, mainly for deploying small apps and managing storage, but I'm still gaining experience and open to learning more.
 Recruiter: I see, the role focuses on building backend services in Python, mainly FastAPI.
-Candidate: Sounds very interesting, I'm confident I can handle it",schedule,not_end
+Candidate: Sounds very interesting, I'm confident I can handle it",schedule
 11,9,2024-04-14T15:30:00Z,2024-04-14T15:38:53Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: I have three years' experience with Pyhon and AWS.
 Recruiter: Could you elaborate on your experience with cloud platforms like AWS?
@@ -153,44 +153,44 @@ Candidate: I've worked a bit with AWS, mainly for deploying small apps and manag
 Recruiter: I see, the role focuses on building backend services in Python, mainly FastAPI.
 Candidate: Sounds very interesting, I'm confident I can handle it
 Recruiter: Great, Can we set up a meeting next Tuesday
-Candidate: Yes, absolutely!",end,end
-12,1,2024-04-26T16:18:00Z,2024-04-26T16:18:00Z,,continue,not_end
+Candidate: Yes, absolutely!",end
+12,1,2024-04-26T16:18:00Z,2024-04-26T16:18:00Z,,continue
 12,3,2024-04-26T16:18:00Z,2024-04-26T16:21:30Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
-Candidate: Yes, 3 years' experience",schedule,not_end
+Candidate: Yes, 3 years' experience",schedule
 12,5,2024-04-26T16:18:00Z,2024-04-26T16:23:20Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: Yes, 3 years' experience
 Recruiter: Could we schedule a chat this Friday at 11 AM or next Monday at 9 AM?
-Candidate: Those slots don't work for me.",schedule,not_end
+Candidate: Those slots don't work for me.",schedule
 12,7,2024-04-26T16:18:00Z,2024-04-26T16:25:24Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: Yes, 3 years' experience
 Recruiter: Could we schedule a chat this Friday at 11 AM or next Monday at 9 AM?
 Candidate: Those slots don't work for me.
 Recruiter: No problem. How about Thursday at 4 PM instead?
-Candidate: Wednesday at 10 AM works for me.",end,end
-13,1,2024-04-25T15:39:00Z,2024-04-25T15:39:00Z,,continue,not_end
+Candidate: Wednesday at 10 AM works for me.",end
+13,1,2024-04-25T15:39:00Z,2024-04-25T15:39:00Z,,continue
 13,3,2024-04-25T15:39:00Z,2024-04-25T15:41:35Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
-Candidate: I primarily work with Python for backend services and have solid SQL knowledge.",schedule,not_end
+Candidate: I primarily work with Python for backend services and have solid SQL knowledge.",schedule
 13,5,2024-04-25T15:39:00Z,2024-04-25T15:44:13Z,"Recruiter: Hello! I saw your application for the Python Developer position—how long have you been working with Python?
 Candidate: I primarily work with Python for backend services and have solid SQL knowledge.
 Recruiter: Could we schedule a chat this Friday at 11 AM or next Monday at 9 AM?
-Candidate: I'm no longer interested in the position.",end,end
-14,1,2024-04-22T17:51:00Z,2024-04-22T17:51:00Z,,continue,not_end
+Candidate: I'm no longer interested in the position.",end
+14,1,2024-04-22T17:51:00Z,2024-04-22T17:51:00Z,,continue
 14,3,2024-04-22T17:51:00Z,2024-04-22T17:53:15Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
-Candidate: Sure, I have four years of Python experience.",schedule,not_end
+Candidate: Sure, I have four years of Python experience.",schedule
 14,5,2024-04-22T17:51:00Z,2024-04-22T17:55:40Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: Sure, I have four years of Python experience.
 Recruiter: How about an interview Monday at 3 PM or Tuesday at 11 AM?
-Candidate: I can't at that time—I'm busy.",schedule,not_end
+Candidate: I can't at that time—I'm busy.",schedule
 14,7,2024-04-22T17:51:00Z,2024-04-22T17:58:16Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: Sure, I have four years of Python experience.
 Recruiter: How about an interview Monday at 3 PM or Tuesday at 11 AM?
 Candidate: I can't at that time—I'm busy.
 Recruiter: Alright, would Wednesday at 1 PM work?
-Candidate: Tuesday at 10 AM works.",end,end
-15,1,2024-04-27T15:07:00Z,2024-04-27T15:07:00Z,,continue,not_end
+Candidate: Tuesday at 10 AM works.",end
+15,1,2024-04-27T15:07:00Z,2024-04-27T15:07:00Z,,continue
 15,3,2024-04-27T15:07:00Z,2024-04-27T15:09:14Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
-Candidate: I've been using Python professionally for five years, mostly for ML.",schedule,not_end
+Candidate: I've been using Python professionally for five years, mostly for ML.",schedule
 15,5,2024-04-27T15:07:00Z,2024-04-27T15:10:32Z,"Recruiter: Hi, thanks for submitting your application for our Python Developer role. Could you share a bit about your Python experience?
 Candidate: I've been using Python professionally for five years, mostly for ML.
 Recruiter: Could we schedule a chat this Friday at 11 AM or next Monday at 9 AM?
-Candidate: I'm sorry, but I'm no longer interested.",end,end
+Candidate: I'm sorry, but I'm no longer interested.",end

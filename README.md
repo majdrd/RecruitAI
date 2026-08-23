@@ -1,100 +1,261 @@
-# RecruitAI
+<!-- PROJECT LOGO -->
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Logo" width="120" height="120">
+</p>
 
-A student proof of concept for a multi-agent recruiting chatbot. The bot talks to a Python Developer candidate in Streamlit, answers questions from the job-description PDF, offers interview times from a local SQLite schedule, and ends the chat when the candidate is done or not interested.
+<h1 align="center">RecruitAI</h1>
 
-This project uses the same level of tools taught in the course: Python modules, SQLAlchemy, sklearn tuning, OpenAI, LangChain agents/tools/memory, and a simple Streamlit UI.
+<p align="center">
+  A multi-agent recruiting chatbot that answers job questions, offers interview slots, and knows when to stop<br>
+  <a href="#usage">View Demo</a>
+  ·
+  <a href="https://github.com/majdrd/RecruitAI/issues">Report Bug</a>
+  ·
+  <a href="https://github.com/majdrd/RecruitAI/issues">Request Feature</a>
+</p>
 
-## How to install and run locally
+---
+<br></br>
+
+## Table of Contents
+
+- [About The Project](#about-the-project)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Screenshots](#screenshots)
+- [Code Examples](#code-examples)
+- [Project Structure](#project-structure)
+- [To-Do List](#to-do-list)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgments](#acknowledgments)
+
+---
+<br></br>
+
+
+## About The Project
+
+> RecruitAI is a proof-of-concept recruiting assistant that holds a conversation with a candidate
+> who applied for a Python Developer role. It answers questions about the job from the official job
+> description using retrieval, proposes real interview slots from a database, and ends the
+> conversation politely when the candidate is no longer interested.
+
+A **Main Agent** owns the conversation and its memory. It never touches the database or the vector
+store directly. Instead, on each turn it consults up to three specialised advisors and then decides
+what to say.
+
+```mermaid
+flowchart LR
+    Candidate[Candidate] --> MainAgent[Main Agent + memory]
+    MainAgent --> ExitAdvisor[Exit Advisor]
+    MainAgent --> SchedAdvisor[Sched Advisor]
+    MainAgent --> InfoAdvisor[Info Advisor]
+    SchedAdvisor -->|SQL retrieve| Schedule[(SQLite Schedule)]
+    InfoAdvisor -->|vector retrieve| Chroma[(Chroma - job description)]
+    MainAgent --> Reply[Reply to candidate]
+```
+
+Each advisor returns a decision, never candidate-facing text. The Exit Advisor answers `end` or
+`dont_end`, the Sched Advisor answers `sched` or `dont_sched` and retrieves the three nearest
+available slots, and the Info Advisor answers whether the question needs the job description. When
+advisors disagree, the priority is **end > schedule > continue**.
+
+<div style="background: #272822; color: #f8f8f2; padding: 10px; border-radius: 8px;">
+  <b> Technologies:</b> Python, LangChain, OpenAI API, Chroma, SQLAlchemy, SQLite, Pandas, Streamlit
+</div>
+
+---
+<br></br>
+
+
+## Features
+
+- [x] Multi-agent orchestration with a Python control layer
+- [x] Conversation memory on the Main Agent
+- [x] Retrieval-augmented answers from a PDF job description (Chroma)
+- [x] Interview slot lookup from a seeded SQLite calendar
+- [x] Exit detection through prompt engineering
+- [x] Evaluation against labelled recruiter conversations
+- [x] Streamlit chat interface
+- [ ] Cloud deployment _(coming soon!)_
+
+---
+<br></br>
+
+
+##  Getting Started
+
+### Prerequisites
+
+- Python >= 3.8
+- pip
+- An OpenAI API key
+
+### Installation
 
 ```bash
+git clone https://github.com/majdrd/RecruitAI.git
+cd RecruitAI
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Put your OpenAI key in `.env`:
+Then put your OpenAI key in `.env`:
 
-```
+```bash
 OPENAI_API_KEY=sk-...
 OPENAI_MODEL=gpt-4o
 ```
 
-Prepare local data (run these from the project root):
+---
+<br></br>
+
+
+## Usage
+
+Build the interview calendar and the vector store once, then start the chat:
 
 ```bash
 python data/seed_schedule.py
 python -m app.modules.embedding.embed_pdf
-python -m app.modules.finetuning.train_exit_model
-```
-
-Start the chat app:
-
-```bash
 streamlit run streamlit_app/streamlit_main.py
 ```
 
-Or use the terminal debugger:
+Run the tests that do not need the API:
 
 ```bash
-python -m app.main
+python -m unittest discover -s tests -p "test_main.py"
 ```
 
-Run tests:
+> The seeded calendar covers **2024**, so use the sidebar in the Streamlit app to simulate a date
+> inside that year. There are no Monday or Saturday slots.
 
-```bash
-python -m unittest tests.test_main
+---
+<br></br>
+
+
+## Screenshots
+
+_Run `streamlit run streamlit_app/streamlit_main.py` to see the chat interface._
+
+---
+<br></br>
+
+
+## Code Examples
+
+Ask the schedule for the next three available interview slots:
+
+```python
+from datetime import datetime
+from app.modules.database.db import get_nearest_slots
+
+slots = get_nearest_slots(datetime(2024, 4, 3, 15, 12), position="Python Dev", limit=3)
+for slot in slots:
+    print(slot.date, slot.time)
 ```
 
-Open `tests/test_evals.ipynb` to compute accuracy and a confusion matrix on the labeled recruiter turns.
+Handle one conversation turn through the orchestrator:
 
-## Basic usage
+```python
+from app.modules.agents.orchestrator import handle_turn
 
-1. The assistant starts with a short recruiter greeting.
-2. Ask about the role (stack, skills, remote/hybrid). The Info Advisor searches the PDF.
-3. Say you want to book a time. The Scheduling Advisor reads the chat, uses the conversation date, and offers the 3 nearest available Python Dev slots.
-4. If you say you are not interested, the Exit Advisor ends the conversation.
-
-The sidebar can simulate a 2024 conversation date so the seeded calendar still has slots. You can also send an optional name/note as the first candidate message.
-
-## Project structure
-
+reply, action = handle_turn(session_id="demo", user_message="Sorry, I'm not interested.")
+print(action)  # end
+print(reply)
 ```
+
+---
+<br></br>
+
+
+## Project Structure
+
+```text
 RecruitAI/
-  .gitignore
-  README.md
-  LICENSE
-  requirements.txt
-  .env
-  data/                      # conversations, PDF, SQLite seed
-  chroma_db/                 # created by the embedding step
-  models/                    # created by Exit Advisor training
-  app/
-    main.py                  # CLI entry point
-    modules/
-      agents/                # Main Agent, advisors, orchestrator
-      database/              # SQLAlchemy schedule queries
-      embedding/             # PDF -> Chroma
-      finetuning/            # labeled data + GridSearchCV
-      prompts/               # role / instruction / few-shot prompts
-  streamlit_app/
-    streamlit_main.py
-    utils.py
-  tests/
-    test_main.py
-    test_evals.ipynb
+├── app/
+│   ├── main.py
+│   └── modules/
+│       ├── agents/            # main agent, exit / sched / info advisors, orchestrator
+│       ├── database/          # SQLAlchemy access to the Schedule table
+│       ├── embedding/         # PDF loading, chunking, Chroma vector store
+│       ├── evaluation/        # labelled conversations prepared for scoring
+│       ├── prompts/           # prompt files (Identity / Instructions / Examples)
+│       └── config.py          # shared paths and environment loading
+├── data/
+│   ├── Python_Developer_Job_Description.pdf
+│   ├── sms_conversations.json
+│   └── seed_schedule.py
+├── streamlit_app/
+│   └── streamlit_main.py
+├── tests/
+│   ├── test_main.py
+│   └── test_evals.ipynb
+├── requirements.txt
+├── .env.example
+├── AGENTS.md
+├── CONTRIBUTING.md
+└── README.md
 ```
 
-`assets/` is course reference material only and is not part of the submitted app.
+---
+<br></br>
 
-## Streamlit Community Cloud
 
-- Add `OPENAI_API_KEY` as a secret.
-- Set the main file to `streamlit_app/streamlit_main.py`.
-- After deploy, run the seed / embed / train commands in the app environment, or add a one-time setup step. SQLite and Chroma files are local and may need to be rebuilt on a fresh container.
+## To-Do List
 
-## Notes
+- [x] Project structure
+- [x] Schedule database and slot retrieval
+- [x] PDF embedding and job-information retrieval
+- [x] Exit, Sched and Info advisors
+- [x] Main Agent and orchestrator
+- [x] Streamlit interface
+- [x] Evaluation notebook
+- [ ] Cloud deployment
 
-- The original `db_Tech.sql` seed was SQL Server. This app uses SQLite with the same columns and calendar rules (2024, Tue–Fri and Sunday, 09:00–17:00).
-- The seed has no Mondays. If a candidate asks for Monday, the tool returns the next real available slots.
-- The Exit Advisor is a tuned sklearn model (Lesson 15 GridSearchCV), not an OpenAI fine-tuned LLM.
+---
+<br></br>
+
+
+## Contributing
+
+This is a two-person student project. See [CONTRIBUTING.md](CONTRIBUTING.md) for the work split and
+the rules for implementing the skeleton.
+
+---
+<br></br>
+
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+<br></br>
+
+
+## Contact
+
+**Majd** - [majd.rd@gmail.com](mailto:majd.rd@gmail.com)
+Project Link: [https://github.com/majdrd/RecruitAI](https://github.com/majdrd/RecruitAI)
+
+---
+<br></br>
+
+
+## Acknowledgments
+
+- [Python](https://www.python.org/)
+- [LangChain](https://python.langchain.com/)
+- [OpenAI API](https://platform.openai.com/docs/overview)
+- [Chroma](https://www.trychroma.com/)
+- [SQLAlchemy](https://www.sqlalchemy.org/)
+- [Streamlit](https://streamlit.io/)
+
+
+---
