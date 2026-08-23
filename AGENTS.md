@@ -8,9 +8,11 @@ slots from a local SQLite `Schedule` table, and ends the chat when the candidate
 
 A Main Agent orchestrates three advisors. It never queries SQL or Chroma itself.
 
-- **Main Agent** — holds the session memory, picks one advisor per inner step, then either consults
-  another advisor in the same turn or sends the user-facing reply. Cap the inner loop at 3 advisor
-  calls. Returns JSON: `{"next": "exit"|"sched"|"info"|"respond", "user_message": "..."}`.
+- **Main Agent** — holds the session memory and makes the two decisions the workflow diagram gives
+  it. First `choose_advisor` picks one of the three advisors, returning
+  `{"advisor": "exit"|"sched"|"info", "reason": "..."}`; it cannot reach the candidate at this step.
+  Then `decide_reply` returns `{"next": "consult_again"|"respond", "user_message": "..."}`. Cap the
+  inner loop at 3 advisor calls. Each decision has its own prompt file.
 - **Exit Advisor** — `end` vs `dont_end`. Built with **prompt engineering**, not fine-tuning
   (the teacher changed this after an API change).
 - **Sched Advisor** — `sched` vs `dont_sched`; if `sched`, retrieves 3 slots via SQLAlchemy.

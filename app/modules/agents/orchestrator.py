@@ -8,6 +8,11 @@ from app.modules.agents import exit_advisor, info_advisor, main_agent, sched_adv
 
 MAX_ADVISOR_CALLS = 3
 SESSION_STORE = {}
+ADVISOR_LABELS = {
+    "exit": "Exit Advisor",
+    "sched": "Sched Advisor",
+    "info": "Info Advisor",
+}
 
 
 def get_history(session_id):
@@ -35,6 +40,16 @@ def resolve_action(advisor_results):
     return "continue"
 
 
+def consult_advisor(advisor, history, conversation_dt):
+    """Send the full chat history to one advisor and return its decision."""
+    history_text = format_history(history)
+    if advisor == "sched":
+        return sched_advisor.advise(history_text, conversation_dt)
+    if advisor == "info":
+        return info_advisor.advise(history_text)
+    return exit_advisor.predict(history_text)
+
+
 def _parse_conversation_dt(conversation_dt):
     if conversation_dt is None:
         return datetime.now()
@@ -56,34 +71,25 @@ def handle_turn(user_input, session_id="default", conversation_dt=None):
     message = ""
 
     for _ in range(MAX_ADVISOR_CALLS):
-        decision = main_agent.decide(history.messages, advisor_notes)
-        nxt = str(decision.get("next", "respond")).lower()
+        # First decision in the diagram: pick one of the three advisors.
+        # The Main Agent cannot reach the candidate without consulting one.
+        advisor = main_agent.choose_advisor(history.messages, advisor_notes)
+        result = consult_advisor(advisor, history, conversation_dt)
+        advisor_results[advisor] = result
+        advisor_notes.append(f"{ADVISOR_LABELS[advisor]}: {result}")
 
-        if nxt == "respond":
-            message = decision.get("user_message") or ""
-            break
-        if nxt == "exit":
-            result = exit_advisor.predict(format_history(history))
-            advisor_results["exit"] = result
-            advisor_notes.append(f"Exit Advisor: {result}")
-        elif nxt == "sched":
-            result = sched_advisor.advise(format_history(history), conversation_dt)
-            advisor_results["sched"] = result
-            advisor_notes.append(f"Sched Advisor: {result}")
-        elif nxt == "info":
-            result = info_advisor.advise(format_history(history))
-            advisor_results["info"] = result
-            advisor_notes.append(f"Info Advisor: {result}")
-        else:
-            message = decision.get("user_message") or ""
+        # Second decision: consult another advisor, or send the message.
+        decision = main_agent.decide_reply(history.messages, advisor_notes)
+        if decision["next"] == "respond":
+            message = decision["user_message"]
             break
     else:
-        decision = main_agent.decide(history.messages, advisor_notes, force_respond=True)
-        message = decision.get("user_message") or ""
+        decision = main_agent.decide_reply(history.messages, advisor_notes, force_respond=True)
+        message = decision["user_message"]
 
     if not message:
-        decision = main_agent.decide(history.messages, advisor_notes, force_respond=True)
-        message = decision.get("user_message") or "Thanks for your message."
+        decision = main_agent.decide_reply(history.messages, advisor_notes, force_respond=True)
+        message = decision["user_message"] or "Thanks for your message."
 
     action = resolve_action(advisor_results)
     history.add_ai_message(message)

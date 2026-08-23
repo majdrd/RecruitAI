@@ -63,7 +63,8 @@ with st.sidebar:
     if st.button("Start with registration"):
         text = registration_message(name, note)
         if text:
-            run_turn(text, parse_simulated_date(simulated))
+            with st.spinner("Thinking..."):
+                run_turn(text, parse_simulated_date(simulated))
             st.rerun()
     if st.button("Reset conversation"):
         st.session_state.session_id = str(uuid4())
@@ -83,8 +84,16 @@ for message in st.session_state.messages:
 
 if st.session_state.conversation_ended:
     st.info("This conversation has ended.")
-else:
-    user_text = st.chat_input("Write a message")
-    if user_text:
-        run_turn(user_text, parse_simulated_date(simulated))
-        st.rerun()
+
+# Keep the chat input rendered so the page layout does not shift when the chat ends.
+user_text = st.chat_input(
+    "Write a message",
+    disabled=st.session_state.conversation_ended,
+)
+if user_text:
+    with st.chat_message("user"):
+        st.write(user_text)
+    with st.chat_message("assistant"):
+        with st.spinner("Thinking..."):
+            run_turn(user_text, parse_simulated_date(simulated))
+    st.rerun()
