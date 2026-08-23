@@ -1,6 +1,6 @@
 # Contributing
 
-RecruitAI is a two-person student project. The `file_structure` branch is an **empty skeleton**:
+RecruitAI is a two-person student project by **Majd Rada** and **Malak Abu Saleh**. The `file_structure` branch is an **empty skeleton**:
 every code file holds a TODO describing what it should do and a `Help: Lesson N` line pointing at
 the course lesson that teaches it. The point is to implement the files yourself.
 
@@ -19,14 +19,14 @@ See [AGENTS.md](AGENTS.md) for the full architecture and technical constraints.
 
 ## Work split
 
-**Person A — scheduling**
+**Majd Rada — scheduling**
 
 - `data/seed_schedule.py`
 - `app/modules/database/db.py`
 - `app/modules/agents/sched_advisor.py`
 - `app/modules/prompts/sched_advisor.txt`
 
-**Person B — job information**
+**Malak Abu Saleh — job information**
 
 - `app/modules/embedding/embed_pdf.py`
 - `app/modules/agents/info_advisor.py`
