@@ -2,7 +2,9 @@
 
 This branch is the **empty file structure** for learning. Each code file has a TODO and a **Help: Lesson N** line. Fill in the files yourself. The finished solution lives on the `FINAL_PROJECT` branch if you get stuck.
 
-This layout follows the teacher template (`app/`, `streamlit_app/`, `tests/`) with real module names (Fine-Tuning, Embedding, agents). The brief allows that adjustment.
+This layout follows the teacher template (`app/`, `streamlit_app/`, `tests/`) with real module names (Evaluation, Embedding, agents). The brief allows that adjustment.
+
+The Exit Advisor is built with **prompt engineering**, not fine-tuning, following Amir's update about the API change.
 
 ## How to install
 
@@ -20,7 +22,6 @@ Suggested order after you implement the matching files:
 ```bash
 python data/seed_schedule.py
 python -m app.modules.embedding.embed_pdf
-python -m app.modules.finetuning.train_exit_model
 streamlit run streamlit_app/streamlit_main.py
 ```
 
@@ -41,7 +42,7 @@ streamlit run streamlit_app/streamlit_main.py
 
 **Together later**
 
-- Exit model (`finetuning/` + `exit_advisor.py`)
+- Exit Advisor prompt (`prompts/exit_advisor.txt` + `exit_advisor.py`)
 - Main Agent + orchestrator
 - Streamlit
 - `tests/test_evals.ipynb`
@@ -56,14 +57,14 @@ RecruitAI/
   requirements.txt
   .env.example
   data/                      # PDF, labeled chats, seed script
-  models/                    # exit_advisor.pkl after training
+  models/
   app/
     main.py
     modules/
       agents/
       database/
       embedding/
-      finetuning/
+      evaluation/
       prompts/
   streamlit_app/
   tests/

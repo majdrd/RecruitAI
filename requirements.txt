@@ -10,11 +10,9 @@ chromadb
 pypdf
 sqlalchemy
 pandas
-scikit-learn
 matplotlib
 seaborn
 streamlit
-joblib
 python-dateutil
 notebook
 ipykernel
