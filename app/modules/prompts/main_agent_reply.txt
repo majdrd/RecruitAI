@@ -1,0 +1,5 @@
+# TODO: Main Agent prompt for the second decision (Identity / Instructions / few-shot Examples).
+# An advisor has answered. Teach the model to choose consult_again | respond,
+# and to write short SMS-style replies when it responds.
+# If you put JSON examples in this file, escape { } as {{ }} when using ChatPromptTemplate.
+# Help: Lesson 20 - GenAI (DL) - Prompt Engineering

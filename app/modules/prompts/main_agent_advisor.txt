@@ -1,0 +1,5 @@
+# TODO: Main Agent prompt for the first decision (Identity / Instructions / few-shot Examples).
+# Teach the model to pick exactly one advisor: exit | sched | info, and to say why.
+# At this step it does not talk to the candidate and does not query anything itself.
+# If you put JSON examples in this file, escape { } as {{ }} when using ChatPromptTemplate.
+# Help: Lesson 20 - GenAI (DL) - Prompt Engineering
