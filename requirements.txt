@@ -10,6 +10,7 @@ chromadb
 pypdf
 sqlalchemy
 pandas
+scikit-learn
 matplotlib
 seaborn
 streamlit

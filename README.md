@@ -129,7 +129,7 @@ streamlit run streamlit_app/streamlit_main.py
 Run the tests that do not need the API:
 
 ```bash
-python -m pytest tests/test_main.py
+python -m unittest discover -s tests -p "test_main.py"
 ```
 
 > The seeded calendar covers **2024**, so use the sidebar in the Streamlit app to simulate a date

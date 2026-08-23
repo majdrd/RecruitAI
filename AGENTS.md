@@ -25,7 +25,7 @@ Evaluation labels are `continue` | `schedule` | `end`, and when advisors disagre
 - `file_structure` — the study skeleton. Each file is a TODO stub with a `Help: Lesson N` line that
   must be preserved. Two students implement it themselves.
 - `FINAL_PROJECT` — a complete working implementation, for **reference only**. Never copy it onto
-  the study branch unless explicitly asked. Its Exit Advisor uses sklearn, which is now outdated.
+  the study branch unless explicitly asked.
 - `main` — nearly empty original repo.
 
 ## Constraints
