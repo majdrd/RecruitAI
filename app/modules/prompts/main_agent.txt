@@ -32,9 +32,9 @@ Exit Advisor: {"decision": "end", "reason": "candidate asked to be removed"}
 </assistant_response>
 
 <advisor_notes>
-Sched Advisor: {"decision": "sched", "slots": ["2024-04-05 at 10:00", "2024-04-07 at 14:00", "2024-04-09 at 09:00"]}
+Sched Advisor: {"decision": "sched", "slots": ["2026-08-25 at 10:00", "2026-08-26 at 14:00", "2026-08-27 at 09:00"]}
 </advisor_notes>
 
 <assistant_response>
-{"next": "respond", "user_message": "Our engineering manager can interview you Friday at 10 AM, Sunday at 2 PM, or Tuesday at 9 AM. Which works best?"}
+{"next": "respond", "user_message": "Our engineering manager can interview you Tuesday at 10 AM, Wednesday at 2 PM, or Thursday at 9 AM. Which works best?"}
 </assistant_response>

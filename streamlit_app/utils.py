@@ -13,6 +13,9 @@ def parse_simulated_date(value):
         return datetime.now()
     if isinstance(value, datetime):
         return value
+    now = datetime.now()
+    if value == now.date():
+        return now
     return datetime.combine(value, datetime.min.time().replace(hour=9))
 
 

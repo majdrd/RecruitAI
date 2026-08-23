@@ -41,12 +41,15 @@ Evaluation labels are `continue` | `schedule` | `end`, and when advisors disagre
 
 ## Data and calendar
 
-- The seed calendar is **2024**, Tuesday–Friday plus Sunday, 09:00–17:00. There are no Monday or
-  Saturday rows. If a candidate asks for Monday, return the next real available slots and never
-  invent times. Default position is `Python Dev`.
+- The seed calendar is a **rolling 12 months starting the day the seed script runs**, Tuesday–Friday
+  plus Sunday, 09:00–17:00. There are no Monday or Saturday rows. If a candidate asks for Monday,
+  return the next real available slots and never invent times. Default position is `Python Dev`.
+  The teacher's original script used the fixed year 2024; rolling avoids an expiring calendar.
 - Schedule access is retrieve-only. `date` and `time` are stored as TEXT (`YYYY-MM-DD`, `HH:MM:SS`)
   so SQLite sorts them correctly.
-- The Streamlit UI must be able to simulate a 2024 date, since a real 2026 `now()` finds no slots.
+- Because the calendar starts today, a real `datetime.now()` always finds slots. Reseed if the
+  database is older than a year. Evaluation treats each labelled conversation as happening today,
+  since the dataset timestamps are from 2024 and would fall outside the calendar.
 
 ## Conventions
 

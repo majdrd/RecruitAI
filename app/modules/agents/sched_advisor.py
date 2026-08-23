@@ -100,4 +100,4 @@ if __name__ == "__main__":
         "Assistant: Thanks for applying to our Python Developer opening.\n"
         "Candidate: Sounds great! I'd be happy to schedule a meeting"
     )
-    print(advise(history, conversation_dt=datetime(2024, 4, 3, 15, 12), verbose=True))
+    print(advise(history, conversation_dt=datetime.now(), verbose=True))

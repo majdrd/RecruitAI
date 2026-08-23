@@ -132,8 +132,9 @@ Run the tests that do not need the API:
 python -m unittest discover -s tests -p "test_main.py"
 ```
 
-> The seeded calendar covers **2024**, so use the sidebar in the Streamlit app to simulate a date
-> inside that year. There are no Monday or Saturday slots.
+> The seed script builds a **rolling 12 months of slots starting the day you run it**, so the app
+> works with today's date out of the box. There are no Monday or Saturday slots. Reseed if the
+> database is more than a year old.
 
 ---
 <br></br>
@@ -155,7 +156,7 @@ Ask the schedule for the next three available interview slots:
 from datetime import datetime
 from app.modules.database.db import get_nearest_slots
 
-slots = get_nearest_slots(datetime(2024, 4, 3, 15, 12), position="Python Dev", limit=3)
+slots = get_nearest_slots(datetime.now(), position="Python Dev", limit=3)
 for slot in slots:
     print(slot.date, slot.time)
 ```
@@ -241,7 +242,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-**Majd** - [majd.rd@gmail.com](mailto:majd.rd@gmail.com)
+Built by **Majd Rada** and **Malak Abu Saleh**.
+
+**Majd Rada** - [majd.rd@gmail.com](mailto:majd.rd@gmail.com)
 Project Link: [https://github.com/majdrd/RecruitAI](https://github.com/majdrd/RecruitAI)
 
 ---

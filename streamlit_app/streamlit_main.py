@@ -55,8 +55,8 @@ init_state()
 with st.sidebar:
     st.header("Session")
     simulated = st.date_input(
-        "Simulate conversation date (2024 slots)",
-        value=date(2024, 4, 3),
+        "Conversation date",
+        value=date.today(),
     )
     name = st.text_input("Your name (optional)")
     note = st.text_area("Registration note (optional)")

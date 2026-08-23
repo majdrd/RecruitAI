@@ -2,7 +2,7 @@
 
 import sys
 import unittest
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,7 +16,7 @@ from app.modules.evaluation.prepare_data import build_labeled_rows
 
 class ScheduleTests(unittest.TestCase):
     def test_nearest_slots_limit_and_order(self):
-        slots = get_nearest_slots(datetime(2024, 4, 3, 15, 12), position="Python Dev", limit=3)
+        slots = get_nearest_slots(datetime.now(), position="Python Dev", limit=3)
         self.assertLessEqual(len(slots), 3)
         self.assertTrue(slots, "seeded database should have available Python Dev slots")
         dates = [slot["date"] for slot in slots]
@@ -25,8 +25,9 @@ class ScheduleTests(unittest.TestCase):
             weekday = datetime.strptime(slot["date"], "%Y-%m-%d").weekday()
             self.assertNotIn(weekday, {0, 5}, "Monday and Saturday should not appear")
 
-    def test_no_slots_after_year(self):
-        slots = get_nearest_slots(datetime(2025, 1, 1, 9, 0), position="Python Dev", limit=3)
+    def test_no_slots_past_the_calendar(self):
+        beyond = datetime.now() + timedelta(days=400)
+        slots = get_nearest_slots(beyond, position="Python Dev", limit=3)
         self.assertEqual(slots, [])
 
 

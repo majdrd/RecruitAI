@@ -9,8 +9,9 @@ from pathlib import Path
 DATA_DIR = Path(__file__).resolve().parent
 DB_PATH = DATA_DIR / "tech_schedule.db"
 
-START_DATE = date(2024, 1, 1)
-END_DATE = date(2024, 12, 31)
+# Rolling twelve months from the run date, so a real datetime.now() always finds slots.
+START_DATE = date.today()
+END_DATE = START_DATE + timedelta(days=365)
 SKIP_WEEKDAYS = {0, 5}  # Monday, Saturday
 HOURS = list(range(9, 18))  # 09:00 through 17:00
 POSITIONS = ["Python Dev", "Sql Dev", "Analyst", "ML"]
