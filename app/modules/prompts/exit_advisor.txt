@@ -1,0 +1,7 @@
+# TODO: Exit Advisor prompt (Identity / Instructions / Examples).
+# Decide only end vs dont_end from the full chat history. Do not write to the candidate.
+# Cover these few-shot cases: clear opt-out ("please remove me", "not interested"),
+# already hired elsewhere, interview already confirmed,
+# and counterexamples that must stay dont_end (still asking questions, picking a time).
+# Escape literal { } as {{ }} if you put JSON in the examples — ChatPromptTemplate reads them as variables.
+# Help: Lesson 20 - GenAI (DL) - Prompt Engineering

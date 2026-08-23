@@ -1,0 +1,4 @@
+# TODO: Info Advisor prompt (Identity / Instructions / Examples).
+# Decide info_needed vs info_not_needed. If needed, call retrieve_job_info.
+# Use only retrieved facts. Still aim toward booking an interview.
+# Help: Lesson 20 - GenAI (DL) - Prompt Engineering
