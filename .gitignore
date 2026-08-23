@@ -223,7 +223,6 @@ __marimo__/
 # RecruitAI generated artifacts
 chroma_db/
 data/tech_schedule.db
-models/*.pkl
 
 # Course reference material (not part of the submitted project)
 assets/
