@@ -24,11 +24,12 @@ Evaluation labels are `continue` | `schedule` | `end`, and when advisors disagre
 
 ## Branches
 
-- `file_structure` — the study skeleton. Each file is a TODO stub with a `Help: Lesson N` line that
-  must be preserved. Two students implement it themselves.
+- `main` — the study skeleton and the branch the two students implement on. Every unimplemented file
+  is a TODO stub with a `Help: Lesson N` line that must be preserved. Changes land through a
+  short-lived branch and a pull request.
 - `FINAL_PROJECT` — a complete working implementation, for **reference only**. Never copy it onto
   the study branch unless explicitly asked.
-- `main` — nearly empty original repo.
+- `file_structure` — the original skeleton branch, already merged into `main`. Kept for history.
 
 ## Constraints
 

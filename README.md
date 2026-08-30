@@ -44,18 +44,23 @@
 > conversation politely when the candidate is no longer interested.
 
 A **Main Agent** owns the conversation and its memory. It never touches the database or the vector
-store directly. Instead, on each turn it consults up to three specialised advisors and then decides
-what to say.
+store directly. Each turn it makes two decisions: first it picks one of three specialised advisors,
+then, once that advisor has answered, it either consults another advisor or writes the reply. It
+never answers the candidate without consulting at least one advisor, and it stops after three.
 
 ```mermaid
 flowchart LR
     Candidate[Candidate] --> MainAgent[Main Agent + memory]
-    MainAgent --> ExitAdvisor[Exit Advisor]
-    MainAgent --> SchedAdvisor[Sched Advisor]
-    MainAgent --> InfoAdvisor[Info Advisor]
+    MainAgent -->|picks one| ExitAdvisor[Exit Advisor]
+    MainAgent -->|picks one| SchedAdvisor[Sched Advisor]
+    MainAgent -->|picks one| InfoAdvisor[Info Advisor]
     SchedAdvisor -->|SQL retrieve| Schedule[(SQLite Schedule)]
     InfoAdvisor -->|vector retrieve| Chroma[(Chroma - job description)]
-    MainAgent --> Reply[Reply to candidate]
+    ExitAdvisor --> Decide{"Consult again or reply?"}
+    SchedAdvisor --> Decide
+    InfoAdvisor --> Decide
+    Decide -->|consult again| MainAgent
+    Decide -->|reply| Reply[Reply to candidate]
 ```
 
 Each advisor returns a decision, never candidate-facing text. The Exit Advisor answers `end` or
