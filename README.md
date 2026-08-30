@@ -251,8 +251,12 @@ Built by **Majd Rada** and **Malak Abu Saleh**.
 **Majd Rada** - [majd.rd@gmail.com](mailto:majd.rd@gmail.com)
 Project Link: [https://github.com/majdrd/RecruitAI](https://github.com/majdrd/RecruitAI)
 
-**Malak Abu Saleh** - [malakabusaleh96@gmail.com](mailto:malakabusaleh96@gmail.com)
-Project Link: [https://github.com/majdrd/RecruitAI](https://github.com/majdrd/RecruitAI)
+**Malak Abu Saleh** - 
+[malakabusaleh96@gmail.com](mailto:malakabusaleh96@gmail.com)
+Project Link: 
+[https://github.com/majdrd/RecruitAI](https://github.com/majdrd/RecruitAI)
+
+
 ---
 <br></br>
 
