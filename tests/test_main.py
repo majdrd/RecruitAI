@@ -18,6 +18,8 @@ from sqlalchemy import select
 from app.modules.config import CHROMA_DIR, PDF_PATH, PROMPTS_DIR
 from app.modules.database.db import engine, format_slots, get_nearest_slots, schedule
 from app.modules.embedding.embed_pdf import retrieve_job_info
+from app.modules.agents.orchestrator import resolve_action
+from app.modules.agents import main_agent
 
 
 class ScheduleTests(unittest.TestCase):
@@ -126,6 +128,64 @@ class ExitAdvisorPromptTests(unittest.TestCase):
 
         self.assertEqual(exit_advisor.VALID_DECISIONS, {"end", "dont_end"})
         self.assertTrue(callable(exit_advisor.predict))
+
+
+class ResolveActionTests(unittest.TestCase):
+    def test_end_beats_schedule(self):
+        action = resolve_action(
+            {
+                "exit": {"decision": "end"},
+                "sched": {"decision": "sched"},
+            }
+        )
+        self.assertEqual(action, "end")
+
+    def test_schedule_when_not_ending(self):
+        action = resolve_action(
+            {
+                "exit": {"decision": "dont_end"},
+                "sched": {"decision": "sched"},
+            }
+        )
+        self.assertEqual(action, "schedule")
+
+    def test_continue_default(self):
+        action = resolve_action(
+            {
+                "exit": {"decision": "dont_end"},
+                "sched": {"decision": "dont_sched"},
+            }
+        )
+        self.assertEqual(action, "continue")
+
+    def test_continue_when_no_advisors_ran(self):
+        # This is the bug the two-step Main Agent prevents in handle_turn.
+        action = resolve_action({"exit": None, "sched": None, "info": None})
+        self.assertEqual(action, "continue")
+
+
+class MainAgentPromptTests(unittest.TestCase):
+    def test_advisor_prompt_lists_three_advisors(self):
+        text = (PROMPTS_DIR / "main_agent_advisor.txt").read_text(encoding="utf-8")
+        self.assertIn('"advisor": "exit"', text)
+        self.assertIn('"advisor": "sched"', text)
+        self.assertIn('"advisor": "info"', text)
+
+    def test_reply_prompt_has_both_next_steps(self):
+        text = (PROMPTS_DIR / "main_agent_reply.txt").read_text(encoding="utf-8")
+        self.assertIn('"next": "consult_again"', text)
+        self.assertIn('"next": "respond"', text)
+
+    def test_format_history_messages(self):
+        class FakeMessage:
+            def __init__(self, type, content):
+                self.type = type
+                self.content = content
+
+        text = main_agent.format_history_messages(
+            [FakeMessage("human", "Hi"), FakeMessage("ai", "Hello")]
+        )
+        self.assertEqual(text, "Human: Hi\nAi: Hello")
 
 
 if __name__ == "__main__":
