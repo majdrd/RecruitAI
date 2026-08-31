@@ -16,7 +16,7 @@ stuck, and do not copy it over the skeleton.
 - The Exit Advisor uses **prompt engineering**, not fine-tuning, following the teacher's update.
 - Never commit `.env` or any API key.
 
-See [AGENTS.md](AGENTS.md) for the full architecture and technical constraints.
+See the [README](README.md) for the architecture diagram and the technical stack.
 
 ## Work split
 
