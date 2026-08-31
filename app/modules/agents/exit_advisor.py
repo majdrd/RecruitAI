@@ -25,7 +25,7 @@ def _build_chain():
             ("system", _load_prompt()),
             (
                 "user",
-                "Full conversation:\n{history}\n\n",
+                "Full conversation:\n{history}\n\n"
                 "Return JSON with keys decision and reason.",
             ),
         ]
