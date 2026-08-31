@@ -1,5 +1,17 @@
-# TODO: Shared paths and environment loading.
-# Define PROJECT_ROOT, DATA_DIR, DB_PATH, PDF_PATH, CONVERSATIONS_PATH,
-# CHROMA_DIR, MODELS_DIR, EXIT_MODEL_PATH, PROMPTS_DIR.
-# Load OPENAI_API_KEY from .env with python-dotenv.
-# Help: Lesson 19 - GenAI - Venv & Function Calling (.env / python-dotenv)
+"""Shared paths and environment loading."""
+
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(PROJECT_ROOT / ".env")
+
+DATA_DIR = PROJECT_ROOT / "data"
+DB_PATH = DATA_DIR / "tech_schedule.db"
+PDF_PATH = DATA_DIR / "Python_Developer_Job_Description.pdf"
+CONVERSATIONS_PATH = DATA_DIR / "sms_conversations.json"
+CHROMA_DIR = PROJECT_ROOT / "chroma_db"
+PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
+DEFAULT_POSITION = "Python Dev"
+DEFAULT_MODEL = "gpt-4o"

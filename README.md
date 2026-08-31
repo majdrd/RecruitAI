@@ -204,7 +204,6 @@ RecruitAI/
 │   └── test_evals.ipynb
 ├── requirements.txt
 ├── .env.example
-├── AGENTS.md
 ├── CONTRIBUTING.md
 └── README.md
 ```
