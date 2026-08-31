@@ -20,6 +20,7 @@ from app.modules.database.db import engine, format_slots, get_nearest_slots, sch
 from app.modules.embedding.embed_pdf import retrieve_job_info
 from app.modules.agents.orchestrator import resolve_action
 from app.modules.agents import main_agent
+from streamlit_app.utils import OPENING_MESSAGE, parse_simulated_date, registration_message
 
 
 class ScheduleTests(unittest.TestCase):
@@ -186,6 +187,24 @@ class MainAgentPromptTests(unittest.TestCase):
             [FakeMessage("human", "Hi"), FakeMessage("ai", "Hello")]
         )
         self.assertEqual(text, "Human: Hi\nAi: Hello")
+
+
+class StreamlitUtilsTests(unittest.TestCase):
+    def test_opening_message_mentions_python_role(self):
+        self.assertIn("Python Developer", OPENING_MESSAGE)
+
+    def test_registration_message_combines_name_and_note(self):
+        text = registration_message("Majd", "I like Django.")
+        self.assertEqual(text, "My name is Majd. I like Django.")
+
+    def test_registration_message_empty_when_blank(self):
+        self.assertEqual(registration_message("", ""), "")
+
+    def test_parse_simulated_date_other_day_starts_at_nine(self):
+        other = datetime(2026, 9, 15).date()
+        parsed = parse_simulated_date(other)
+        self.assertEqual(parsed.hour, 9)
+        self.assertEqual(parsed.date(), other)
 
 
 if __name__ == "__main__":
