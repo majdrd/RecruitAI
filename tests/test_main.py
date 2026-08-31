@@ -112,5 +112,21 @@ class InfoAdvisorPromptTests(unittest.TestCase):
         self.assertIn("retrieve_job_info", text)
 
 
+class ExitAdvisorPromptTests(unittest.TestCase):
+    def test_prompt_covers_both_decisions(self):
+        text = (PROMPTS_DIR / "exit_advisor.txt").read_text(encoding="utf-8")
+        self.assertIn('"decision": "end"', text)
+        self.assertIn('"decision": "dont_end"', text)
+        self.assertIn("not interested", text)
+        self.assertIn("already accepted an offer", text)
+
+    def test_predict_shape_defaults_are_documented(self):
+        # Offline: only check the module contract, not a live LLM call.
+        from app.modules.agents import exit_advisor
+
+        self.assertEqual(exit_advisor.VALID_DECISIONS, {"end", "dont_end"})
+        self.assertTrue(callable(exit_advisor.predict))
+
+
 if __name__ == "__main__":
     unittest.main()
