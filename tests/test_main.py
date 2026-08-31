@@ -1,8 +1,10 @@
 """Tests that do not need the OpenAI API."""
 # Help: Lesson 16 - Sql & Python (DL) - Group By & Ddl & SqlAlchemy
 # Help: Lesson 5 - Python - Pandas
+# Help: Lesson 23 - GenAI - NLP & Embedding & Retrieval
 
 import sys
+import tempfile
 import unittest
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -13,7 +15,9 @@ if str(ROOT) not in sys.path:
 
 from sqlalchemy import select
 
+from app.modules.config import CHROMA_DIR, PDF_PATH, PROMPTS_DIR
 from app.modules.database.db import engine, format_slots, get_nearest_slots, schedule
+from app.modules.embedding.embed_pdf import retrieve_job_info
 
 
 class ScheduleTests(unittest.TestCase):
@@ -81,6 +85,31 @@ class FormatSlotsTests(unittest.TestCase):
         self.assertIn("Option 1: 2026-09-01 at 09:00 (Python Dev)", text)
         self.assertIn("Option 2: 2026-09-01 at 11:00 (Python Dev)", text)
         self.assertEqual(len(text.splitlines()), 2)
+
+
+class EmbedPdfTests(unittest.TestCase):
+    def test_job_pdf_exists(self):
+        self.assertTrue(PDF_PATH.exists(), f"expected job PDF at {PDF_PATH}")
+
+    def test_missing_index_explains_how_to_build_it(self):
+        # Empty folder on purpose — no embedding API call happens on this path.
+        empty_dir = Path(tempfile.mkdtemp())
+        message = retrieve_job_info("Is the role remote?", persist_dir=empty_dir)
+        self.assertIn("embed_pdf", message)
+
+    def test_chroma_dir_exists_after_embedding(self):
+        self.assertTrue(
+            CHROMA_DIR.exists() and any(CHROMA_DIR.iterdir()),
+            "chroma_db/ is missing. Run: python -m app.modules.embedding.embed_pdf",
+        )
+
+
+class InfoAdvisorPromptTests(unittest.TestCase):
+    def test_prompt_covers_both_decisions(self):
+        text = (PROMPTS_DIR / "info_advisor.txt").read_text(encoding="utf-8")
+        self.assertIn("info_needed", text)
+        self.assertIn("info_not_needed", text)
+        self.assertIn("retrieve_job_info", text)
 
 
 if __name__ == "__main__":
