@@ -20,6 +20,7 @@ from app.modules.database.db import engine, format_slots, get_nearest_slots, sch
 from app.modules.embedding.embed_pdf import retrieve_job_info
 from app.modules.agents.orchestrator import resolve_action
 from app.modules.agents import main_agent
+from app.modules.evaluation.prepare_data import VALID_LABELS, build_labeled_rows
 from streamlit_app.utils import OPENING_MESSAGE, parse_simulated_date, registration_message
 
 
@@ -205,6 +206,32 @@ class StreamlitUtilsTests(unittest.TestCase):
         parsed = parse_simulated_date(other)
         self.assertEqual(parsed.hour, 9)
         self.assertEqual(parsed.date(), other)
+
+
+class PrepareDataTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.frame = build_labeled_rows()
+
+    def test_labels_are_only_continue_schedule_end(self):
+        labels = set(self.frame["label"].unique())
+        self.assertTrue(labels.issubset(VALID_LABELS))
+
+    def test_expected_row_count_and_balance(self):
+        self.assertEqual(len(self.frame), 59)
+        counts = self.frame["label"].value_counts().to_dict()
+        self.assertEqual(counts.get("continue"), 25)
+        self.assertEqual(counts.get("schedule"), 19)
+        self.assertEqual(counts.get("end"), 15)
+
+    def test_required_columns_exist(self):
+        for column in ("conversation_id", "turn_id", "timestamp_utc", "history", "label"):
+            self.assertIn(column, self.frame.columns)
+
+    def test_history_is_text_before_the_labeled_turn(self):
+        # First labeled turn of a conversation often has empty history.
+        first = self.frame.iloc[0]
+        self.assertIsInstance(first["history"], str)
 
 
 if __name__ == "__main__":
