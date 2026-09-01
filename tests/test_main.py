@@ -18,7 +18,7 @@ from sqlalchemy import select
 from app.modules.config import CHROMA_DIR, PDF_PATH, PROMPTS_DIR
 from app.modules.database.db import engine, format_slots, get_nearest_slots, schedule
 from app.modules.embedding.embed_pdf import retrieve_job_info
-from app.modules.agents.orchestrator import resolve_action
+from app.modules.agents.orchestrator import candidate_locked_a_slot, resolve_action
 from app.modules.agents import main_agent
 from app.modules.evaluation.prepare_data import VALID_LABELS, build_labeled_rows
 from streamlit_app.utils import OPENING_MESSAGE, parse_simulated_date, registration_message
@@ -166,17 +166,64 @@ class ResolveActionTests(unittest.TestCase):
         self.assertEqual(action, "continue")
 
 
+class SlotLockTests(unittest.TestCase):
+    def _history(self, ai_text, user_text):
+        class FakeMessage:
+            def __init__(self, type, content):
+                self.type = type
+                self.content = content
+
+        class FakeHistory:
+            def __init__(self, messages):
+                self.messages = messages
+
+        return FakeHistory(
+            [
+                FakeMessage("ai", ai_text),
+                FakeMessage("human", user_text),
+            ]
+        )
+
+    def test_detects_time_acceptance(self):
+        history = self._history(
+            "We have afternoon slots on September 13 at 12:00, 14:00, or 15:00. Which time would you prefer?",
+            "14:00 is fine",
+        )
+        self.assertTrue(candidate_locked_a_slot(history))
+
+    def test_ignores_interest_without_slot_pick(self):
+        history = self._history(
+            "Could you share a bit about your Python experience?",
+            "I am interested",
+        )
+        self.assertFalse(candidate_locked_a_slot(history))
+
+    def test_ignores_reschedule_request(self):
+        history = self._history(
+            "We can do September 2nd at 09:00, 10:00, or 13:00. Which works best?",
+            "I am busy this week, do you have something later?",
+        )
+        self.assertFalse(candidate_locked_a_slot(history))
+
+
 class MainAgentPromptTests(unittest.TestCase):
     def test_advisor_prompt_lists_three_advisors(self):
         text = (PROMPTS_DIR / "main_agent_advisor.txt").read_text(encoding="utf-8")
         self.assertIn('"advisor": "exit"', text)
         self.assertIn('"advisor": "sched"', text)
         self.assertIn('"advisor": "info"', text)
+        self.assertIn("14:00 is fine", text)
 
-    def test_reply_prompt_has_both_next_steps(self):
+    def test_reply_prompt_closes_after_booking(self):
         text = (PROMPTS_DIR / "main_agent_reply.txt").read_text(encoding="utf-8")
         self.assertIn('"next": "consult_again"', text)
         self.assertIn('"next": "respond"', text)
+        self.assertIn("candidate accepted 14:00", text)
+
+    def test_exit_prompt_ends_on_slot_pick(self):
+        text = (PROMPTS_DIR / "exit_advisor.txt").read_text(encoding="utf-8")
+        self.assertIn("Wednesday at 14:00 works for me", text)
+        self.assertIn("picking one of the offered slots IS a confirmation", text)
 
     def test_format_history_messages(self):
         class FakeMessage:

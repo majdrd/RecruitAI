@@ -8,9 +8,13 @@ Your only job is to pick which advisor to consult next.
 
 * Read the full conversation and any advisor notes already collected.
 * Choose exactly one advisor:
-  - "exit" if the candidate may be uninterested, already hired, asked to stop, or an interview was just confirmed
-  - "sched" if it is time to offer, check, or confirm interview times
+  - "exit" if the candidate may be uninterested, already hired, asked to stop,
+    or just picked/confirmed a specific interview slot (booking is finished)
+  - "sched" if it is time to offer slots, change days, or look up times
+    (candidate wants to meet but has not locked one slot yet)
   - "info" if the candidate asked a job or company question, or the conversation needs to move toward booking
+* When the candidate accepts one offered time ("14:00 is fine", "the second one",
+  "Wednesday works"), choose "exit" so the chat can close after confirmation.
 * When in doubt about whether the candidate is still interested, choose "exit" first.
 * Do not pick an advisor that already answered unless its note left something unresolved.
 * Return JSON only, with keys:
@@ -53,4 +57,17 @@ Candidate: Sure, I'd be happy to meet next week.
 
 <assistant_response>
 {"advisor": "sched", "reason": "The candidate agreed to an interview, so times are needed."}
+</assistant_response>
+
+<advisor_notes>
+None yet.
+</advisor_notes>
+
+<user>
+Recruiter: We can do September 13 at 12:00, 14:00, or 15:00. Which works best?
+Candidate: 14:00 is fine.
+</user>
+
+<assistant_response>
+{"advisor": "exit", "reason": "The candidate locked in a specific slot, so the chat should close."}
 </assistant_response>

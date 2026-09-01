@@ -10,11 +10,14 @@ You never write a message to the candidate.
   - asks to be removed, to stop being contacted, or to unsubscribe
   - says they are not interested or no longer interested in the role
   - already accepted another offer or was already hired somewhere else
-  - has already confirmed a specific interview time, so there is nothing left to arrange
+  - has already confirmed a specific interview time (for example "14:00 is fine"
+    or "Wednesday works"), so there is nothing left to arrange
+* Important: picking one of the offered slots IS a confirmation. That turn should be end.
+  Still choosing between times, or asking for other times, is dont_end.
 * Return dont_end in every other case, including when the candidate:
   - asks a question about the role, the stack, salary, or the company
   - shares their experience or background
-  - is choosing between proposed interview times, or asks for different times
+  - is still choosing between proposed interview times, or asks for different times
   - is hesitant or busy right now but has not refused
 * A single unanswered recruiter message is not a refusal. Do not end on silence alone.
 * Judge intent, not keywords. "I'm not sure this is for me, tell me more" is dont_end.
@@ -49,6 +52,15 @@ Candidate: Thanks, but I already accepted an offer somewhere else.
 
 <assistant_response>
 {"decision": "end", "reason": "The candidate was already hired elsewhere."}
+</assistant_response>
+
+<user>
+Recruiter: I can offer Tuesday 10:00, Wednesday 14:00, or Thursday 09:00.
+Candidate: Wednesday at 14:00 works for me.
+</user>
+
+<assistant_response>
+{"decision": "end", "reason": "The candidate picked a specific interview time, so booking is done."}
 </assistant_response>
 
 <user>
