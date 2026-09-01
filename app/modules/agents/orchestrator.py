@@ -1,6 +1,7 @@
 """Python control layer: one conversation turn with optional advisor loop."""
 # Help: Lesson 22 - GenAI (DL) - LangChain (Agents & Tools, Example 5: Multi-Agent + memory)
 
+import re
 from datetime import datetime
 
 from langchain_community.chat_message_histories import ChatMessageHistory
@@ -43,6 +44,65 @@ def resolve_action(advisor_results):
     return "continue"
 
 
+def candidate_locked_a_slot(history):
+    """True when the latest user message accepts a specific offered interview time.
+
+    Prompts alone were not enough: after "14:00 is fine" the Main Agent often
+    called Sched again and never closed the chat. This small rule forces Exit.
+    """
+    messages = history.messages
+    if len(messages) < 2:
+        return False
+
+    last = messages[-1]
+    if getattr(last, "type", "") != "human":
+        return False
+    user_text = (last.content or "").strip().lower()
+    if not user_text:
+        return False
+
+    prev_ai = ""
+    for message in reversed(messages[:-1]):
+        if getattr(message, "type", "") == "ai":
+            prev_ai = (message.content or "").lower()
+            break
+    if not prev_ai:
+        return False
+
+    # Previous recruiter message should look like it offered times.
+    offers_times = False
+    for token in (":00", " am", " pm", "slot", "available", "which time", "which one", "september"):
+        if token in prev_ai:
+            offers_times = True
+            break
+    if not offers_times:
+        return False
+
+    acceptance_phrases = (
+        "is fine",
+        "works for me",
+        "works",
+        "i'll take",
+        "ill take",
+        "book that",
+        "that one",
+        "sounds good",
+        "perfect",
+        "confirm",
+        "go with",
+        "i take",
+    )
+    for phrase in acceptance_phrases:
+        if phrase in user_text:
+            return True
+
+    if re.search(r"\b([01]?\d|2[0-3]):[0-5]\d\b", user_text):
+        return True
+    if re.search(r"\b([1-9]|1[0-2])\s?(am|pm)\b", user_text):
+        return True
+    return False
+
+
 def consult_advisor(advisor, history, conversation_dt):
     """Send the full chat history to one advisor and return its decision."""
     history_text = format_history(history)
@@ -74,11 +134,26 @@ def handle_turn(user_input, session_id="default", conversation_dt=None):
     advisor_notes = []
     advisor_results = {"exit": None, "sched": None, "info": None}
     message = ""
+    booking_close = candidate_locked_a_slot(history)
 
     for _ in range(MAX_ADVISOR_CALLS):
         # First decision: pick one advisor. The candidate never hears from this step.
-        advisor = main_agent.choose_advisor(history.messages, advisor_notes)
+        # Exception: if the candidate just locked a slot, go straight to Exit.
+        if booking_close and advisor_results["exit"] is None:
+            advisor = "exit"
+        else:
+            advisor = main_agent.choose_advisor(history.messages, advisor_notes)
+
         result = consult_advisor(advisor, history, conversation_dt)
+
+        # Safety net: a locked slot must close the chat even if Exit is unsure.
+        if booking_close and advisor == "exit" and result.get("decision") != "end":
+            result = {
+                "decision": "end",
+                "reason": "The candidate confirmed an interview slot.",
+                "source": "rule",
+            }
+
         advisor_results[advisor] = result
         advisor_notes.append(f"{ADVISOR_LABELS[advisor]}: {result}")
 
