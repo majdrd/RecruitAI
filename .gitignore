@@ -224,6 +224,7 @@ __marimo__/
 # RecruitAI generated artifacts
 chroma_db/
 data/tech_schedule.db
+data/labeled_turns.csv
 
 # Course reference material (not part of the submitted project)
 assets/
