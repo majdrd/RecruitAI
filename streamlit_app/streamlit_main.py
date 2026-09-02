@@ -27,6 +27,8 @@ def init_state():
         ]
     if "conversation_ended" not in st.session_state:
         st.session_state.conversation_ended = False
+    if "conversation_started" not in st.session_state:
+        st.session_state.conversation_started = False
 
 
 def add_message(role, content, action=None):
@@ -43,6 +45,7 @@ def run_turn(text, conversation_dt):
     )
     add_message("user", text)
     add_message("assistant", result["message"], result["action"])
+    st.session_state.conversation_started = True
     if result["action"] == "end":
         st.session_state.conversation_ended = True
 
@@ -59,14 +62,17 @@ with st.sidebar:
         "Conversation date",
         value=date.today(),
     )
-    name = st.text_input("Your name (optional)")
-    note = st.text_area("Registration note (optional)")
-    if st.button("Start with registration"):
+    registration_locked = st.session_state.conversation_started
+    name = st.text_input("Your name (optional)", disabled=registration_locked)
+    note = st.text_area("Registration note (optional)", disabled=registration_locked)
+    if st.button("Start with registration", disabled=registration_locked):
         text = registration_message(name, note)
         if text:
             with st.spinner("Thinking..."):
                 run_turn(text, parse_simulated_date(simulated))
             st.rerun()
+    if registration_locked:
+        st.caption("Registration is locked once the conversation starts.")
     if st.button("Reset conversation"):
         st.session_state.session_id = str(uuid4())
         history = reset_session(st.session_state.session_id)
@@ -75,6 +81,7 @@ with st.sidebar:
             {"role": "assistant", "content": OPENING_MESSAGE, "action": "continue"}
         ]
         st.session_state.conversation_ended = False
+        st.session_state.conversation_started = False
         st.rerun()
 
 for message in st.session_state.messages:
@@ -94,7 +101,6 @@ user_text = st.chat_input(
 if user_text:
     with st.chat_message("user"):
         st.write(user_text)
-    with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
-            run_turn(user_text, parse_simulated_date(simulated))
+    with st.chat_message("assistant"), st.spinner("Thinking..."):
+        run_turn(user_text, parse_simulated_date(simulated))
     st.rerun()
