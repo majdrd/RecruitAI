@@ -147,13 +147,20 @@ python -m unittest discover -s tests -p "test_main.py"
 
 ## Screenshots
 
-Run the Streamlit app locally to try the chat UI:
+<p align="center">
+  <img src="docs/images/screenshots/01-chat-home.png" alt="RecruitAI opening chat" width="820">
+</p>
+<p align="center"><em>Opening screen — the assistant greets the candidate</em></p>
 
-```bash
-streamlit run streamlit_app/streamlit_main.py
-```
+<p align="center">
+  <img src="docs/images/screenshots/02-job-question.png" alt="RecruitAI answering a job question" width="820">
+</p>
+<p align="center"><em>Job questions — Info Advisor pulls answers from the job description</em></p>
 
-_Optional: add saved screenshots under `docs/images/screenshots/` and link them here._
+<p align="center">
+  <img src="docs/images/screenshots/03-interview-slots.png" alt="RecruitAI offering interview slots" width="820">
+</p>
+<p align="center"><em>Scheduling — real slots from SQLite, then a clean close after confirmation</em></p>
 
 ---
 <br></br>
@@ -206,7 +213,7 @@ RecruitAI/
 ├── streamlit_app/
 │   └── streamlit_main.py
 ├── docs/
-│   └── images/                # logo, contributor photos, optional screenshots
+│   └── images/                # logo, contributor photos, screenshots
 ├── tests/
 │   ├── test_main.py
 │   └── test_evals.ipynb
