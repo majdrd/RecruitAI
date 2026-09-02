@@ -90,3 +90,48 @@ Candidate: This week is packed for me, do you have anything later?
 <assistant_response>
 {"decision": "dont_end", "reason": "The candidate is still interested and asked for different times."}
 </assistant_response>
+
+<user>
+Recruiter: Would you like to schedule an interview?
+Candidate: Maybe.
+</user>
+
+<assistant_response>
+{"decision": "dont_end", "reason": "Maybe is hesitation, not a refusal."}
+</assistant_response>
+
+<user>
+Recruiter: I can offer Tuesday 10:00 or Wednesday 14:00.
+Candidate: I'll think about it.
+</user>
+
+<assistant_response>
+{"decision": "dont_end", "reason": "The candidate has not refused or picked a time yet."}
+</assistant_response>
+
+<user>
+Recruiter: Would any of these times work for you?
+Candidate: Call me later, I'm in a meeting.
+</user>
+
+<assistant_response>
+{"decision": "dont_end", "reason": "The candidate deferred but did not opt out."}
+</assistant_response>
+
+<user>
+Recruiter: Could you share a bit about your Python experience?
+Candidate: Thanks!
+</user>
+
+<assistant_response>
+{"decision": "dont_end", "reason": "Thanks alone is not a goodbye or opt-out."}
+</assistant_response>
+
+<user>
+Recruiter: Perfect — you're booked for Wednesday at 14:00.
+Candidate: Looking forward to speaking.
+</user>
+
+<assistant_response>
+{"decision": "end", "reason": "The interview is already confirmed and the chat can close."}
+</assistant_response>
