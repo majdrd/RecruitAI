@@ -1,6 +1,6 @@
 <!-- PROJECT LOGO -->
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Logo" width="120" height="120">
+  <img src="docs/images/logo/README LOGO.png" alt="RecruitAI logo" width="140">
 </p>
 
 <h1 align="center">RecruitAI</h1>
@@ -95,7 +95,7 @@ advisors disagree, the priority is **end > schedule > continue**.
 
 ### Prerequisites
 
-- Python >= 3.8
+- Python 3.12
 - pip
 - An OpenAI API key
 
@@ -147,7 +147,13 @@ python -m unittest discover -s tests -p "test_main.py"
 
 ## Screenshots
 
-_Added once the Streamlit interface is implemented._
+Run the Streamlit app locally to try the chat UI:
+
+```bash
+streamlit run streamlit_app/streamlit_main.py
+```
+
+_Optional: add saved screenshots under `docs/images/screenshots/` and link them here._
 
 ---
 <br></br>
@@ -163,7 +169,7 @@ from app.modules.database.db import get_nearest_slots
 
 slots = get_nearest_slots(datetime.now(), position="Python Dev", limit=3)
 for slot in slots:
-    print(slot.date, slot.time)
+    print(slot["date"], slot["time"])
 ```
 
 Handle one conversation turn through the orchestrator:
@@ -171,9 +177,9 @@ Handle one conversation turn through the orchestrator:
 ```python
 from app.modules.agents.orchestrator import handle_turn
 
-reply, action = handle_turn(session_id="demo", user_message="Sorry, I'm not interested.")
-print(action)  # end
-print(reply)
+result = handle_turn("Sorry, I'm not interested.", session_id="demo")
+print(result["action"])   # end
+print(result["message"])
 ```
 
 ---
@@ -199,6 +205,8 @@ RecruitAI/
 │   └── seed_schedule.py
 ├── streamlit_app/
 │   └── streamlit_main.py
+├── docs/
+│   └── images/                # logo, contributor photos, optional screenshots
 ├── tests/
 │   ├── test_main.py
 │   └── test_evals.ipynb
@@ -216,11 +224,12 @@ RecruitAI/
 
 - [x] Project structure and study skeleton
 - [x] Exit Advisor switched from fine-tuning to prompt engineering
-- [ ] Schedule database and slot retrieval
-- [ ] PDF embedding and job-information retrieval
-- [ ] Advisors and Main Agent
-- [ ] Streamlit interface
-- [ ] Evaluation notebook
+- [x] Schedule database and slot retrieval
+- [x] PDF embedding and job-information retrieval
+- [x] Advisors and Main Agent
+- [x] Streamlit interface
+- [x] Evaluation notebook
+- [ ] Cloud deployment _(optional)_
 
 ---
 <br></br>
@@ -245,15 +254,28 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Built by **Majd Rada** and **Malak Abu Saleh**.
+Built by two product developers as a GenAI course final project.
 
-**Majd Rada** - [majd.rd@gmail.com](mailto:majd.rd@gmail.com)
-Project Link: [https://github.com/majdrd/RecruitAI](https://github.com/majdrd/RecruitAI)
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/images/contributors/majd-rada.jpg" width="140" height="140" alt="Majd Rada" style="border-radius: 50%;" /><br /><br />
+      <b>Majd Rada</b><br />
+      <sub>Product Developer · 11+ years</sub><br />
+      <a href="mailto:majd.rd@gmail.com">majd.rd@gmail.com</a>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/images/contributors/malak-abu-saleh.jpg" width="140" height="140" alt="Malak Abu Saleh" style="border-radius: 50%;" /><br /><br />
+      <b>Malak Abu Saleh</b><br />
+      <sub>Product Developer · 9+ years</sub><br />
+      <a href="mailto:malakabusaleh96@gmail.com">malakabusaleh96@gmail.com</a>
+    </td>
+  </tr>
+</table>
 
-**Malak Abu Saleh** - 
-[malakabusaleh96@gmail.com](mailto:malakabusaleh96@gmail.com)
-Project Link: 
-[https://github.com/majdrd/RecruitAI](https://github.com/majdrd/RecruitAI)
+<p align="center">
+  Project Link: <a href="https://github.com/majdrd/RecruitAI">github.com/majdrd/RecruitAI</a>
+</p>
 
 
 ---
