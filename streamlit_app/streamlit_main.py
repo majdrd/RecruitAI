@@ -13,7 +13,13 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from app.modules.agents.orchestrator import handle_turn, reset_session
-from streamlit_app.utils import OPENING_MESSAGE, parse_simulated_date, registration_message
+from streamlit_app.utils import (
+    LOGO_PATH,
+    OPENING_MESSAGE,
+    load_css,
+    parse_simulated_date,
+    registration_message,
+)
 
 
 def init_state():
@@ -50,13 +56,39 @@ def run_turn(text, conversation_dt):
         st.session_state.conversation_ended = True
 
 
-st.set_page_config(page_title="RecruitAI", page_icon="💬")
-st.title("RecruitAI")
-st.caption("Python Developer recruiting assistant")
+st.set_page_config(
+    page_title="RecruitAI",
+    page_icon=str(LOGO_PATH) if LOGO_PATH.exists() else "💬",
+    layout="centered",
+)
+st.markdown(load_css(), unsafe_allow_html=True)
+
+# Branding header (presentation only — same title/caption as before).
+header_logo, header_text = st.columns([1, 4])
+with header_logo:
+    if LOGO_PATH.exists():
+        st.image(str(LOGO_PATH), width=108)
+with header_text:
+    st.markdown(
+        """
+        <div class="recruit-hero">
+          <div class="recruit-title">RecruitAI</div>
+          <div class="recruit-subtitle">Python Developer recruiting assistant</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 init_state()
 
 with st.sidebar:
+    if LOGO_PATH.exists():
+        st.image(str(LOGO_PATH), width=150)
+    st.markdown(
+        '<div class="sidebar-brand-title">RecruitAI</div>'
+        '<div class="sidebar-brand-sub">AI Recruiting Assistant</div>',
+        unsafe_allow_html=True,
+    )
     st.header("Session")
     simulated = st.date_input(
         "Conversation date",
