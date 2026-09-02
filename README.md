@@ -7,8 +7,6 @@
 
 <p align="center">
   A multi-agent recruiting chatbot that answers job questions, offers interview slots, and knows when to stop<br>
-  <a href="#usage">View Demo</a>
-  ·
   <a href="https://github.com/majdrd/RecruitAI/issues">Report Bug</a>
   ·
   <a href="https://github.com/majdrd/RecruitAI/issues">Request Feature</a>
@@ -85,7 +83,6 @@ advisors disagree, the priority is **end > schedule > continue**.
 - [x] Exit detection through prompt engineering
 - [x] Evaluation against labelled recruiter conversations
 - [x] Streamlit chat interface
-- [ ] Cloud deployment _(coming soon!)_
 
 ---
 <br></br>
@@ -236,7 +233,6 @@ RecruitAI/
 - [x] Advisors and Main Agent
 - [x] Streamlit interface
 - [x] Evaluation notebook
-- [ ] Cloud deployment _(optional)_
 
 ---
 <br></br>
